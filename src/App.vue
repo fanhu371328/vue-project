@@ -28,7 +28,6 @@
 	  data(){
 	  	return {
 	  		seller:{
-	  			
 	  		}
 	  	}
 	  },
@@ -36,7 +35,7 @@
 	  	this.$http.get("/api/seller").then(function(response){
 
 	  		if(response.body.errno == 0) { 
-	  			this.seller = response.body
+	  			this.seller = response.body.data;
 	  			console.log(this.seller)
 	  		}
 	  	})
