@@ -20,7 +20,7 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
 	import myheader from './components/header/header.vue';
 
 	export default {

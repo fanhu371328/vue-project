@@ -17,32 +17,55 @@
   				<span class="text"> {{seller.supports[0].description}}</span>
   			</div>
   		</div>
-  		<div class="support-count" v-if="seller.supports">
-  			<span class="count">{{seller.supports.length}}个个个个</span>
-  			<i class="icon-keyboard_arrow_right"></i>
+  		<div class="support-count" v-if="seller.supports" @click="showDetail">
+  			<span class="count">{{seller.supports.length}}个</span>
+  			<img src="./next@3x.png"/>
   		</div>
   	</div>
   	<!--公告区-->
-  	<div class="bulletin-wrapper">
+  	<div class="bulletin-wrapper" @click="showDetail">
   		<span class="bulletin-title"></span><span class="bulletin-text">{{seller.bulletin}}</span>
-  		<i class="icon-keyboard_arrow_right"></i>
+  		<img src="./next@3x.png"/>
   	</div>
   	<div class="bag">
   		<img :src="seller.avatar"/>
   	</div>
+  	<!--浮层区-->
+  	<div class="detail" v-show="detailShow">
+  		<!--当内容区高于屏幕的时候底部关闭按钮会随着滚动，当小于屏幕高度的时候回固定在屏幕底部-->
+  		<div class="detail-wrapper clearfix">
+  			<div class="detail-main">
+  				
+  				
+  				
+  			</div>
+  		</div>
+  		<div class="detail-close" @click="closeDetail">
+  			<img src="./guanbi@3x.png"/>
+  		</div>
+  	</div>
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
 	
 export default {
   name: 'header', 
-  components: {
-    
+  props: {
+  	seller: {
+  	}
   },
-  props:{
-  	seller:{
-  		
+  data() {
+    return {
+    		detailShow:false,
+    }
+  },
+  methods: {
+  	showDetail() {
+  		this.detailShow = true;
+  	},
+  	closeDetail() {
+  		this.detailShow = false;
   	}
   },
   created() {
@@ -51,18 +74,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
-
-/*@font-face {
-	font-family:icon;
-	src:  url('../../common/fonts/icon.eot?8tqr70')
-  	src:  url('../../common/fonts/icon.eot?8tqr70#iefix') format('embedded-opentype'),
-    url('../../common/fonts/icon.ttf?8tqr70') format('truetype'),
-    url('../../common/fonts/icon.woff?8tqr70') format('woff'),
-    url('../../common/fonts/icon.svg?8tqr70#icon') format('svg')
-  	font-weight: normal
-  	font-style: normal
-}*/
+<style>
 
 .header {
 	position: relative;
@@ -91,16 +103,17 @@ export default {
 	bottom: 10px;
 	right: 12px;
 	background: rgba(0,0,0,.2);
-	padding: 7px 8px;
+	padding: 7px 15px;
 	border-radius: 20px;
 }
 .content-wrapper .support-count span {
 	line-height: 24px;
 	font-size: 10px;
 }
-.content-wrapper .support-count i {
-	font-family: icon;
-	font-size: 10px;
+.content-wrapper .support-count img {
+	width: 6px;
+	height: 10px;
+	margin-left: 10px;
 }
 
 .content-wrapper .content .title .brand {
@@ -162,6 +175,7 @@ export default {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	background: rgba(7,17,27,.2);
+	position: relative;
 }
 .bulletin-wrapper .bulletin-title {
 	display: inline-block;
@@ -178,6 +192,13 @@ export default {
 	vertical-align: middle;
 	line-height: 28px;
 }
+.bulletin-wrapper img {
+	width: 6px;
+	height: 10px;
+	position: absolute;
+	right: 12px;
+	top:8px;
+}
 /*------------背景图----------*/
 .bag {
 	position: absolute;
@@ -193,5 +214,38 @@ export default {
 	margin-left: 18%;
 	margin-top: 8%;
 }
+/*------------浮层--------------*/
+.detail {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 99;
+	width: 100%;
+	height: 100%;
+	overflow: auto;  
+	background: rgba(7,17,27,.8);
+	/*filter: blur(10px);*/
+}
+
+.detail-wrapper {
+	min-height: 100%;
+}
+.detail-main {
+	padding-top: 64px;
+	padding-bottom: 64px;
+}
+.detail-close {
+	position: relative;
+	width:32px;
+	height: 32px;
+	margin: -64px auto 0 auto;
+	/*clear: both;*/
+	font-size: 32px;
+}
+.detail-close img {
+	width: 32px;
+	height: 32px;
+}
+
 
 </style>
