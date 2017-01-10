@@ -8,8 +8,8 @@ import App from './App';
 import goods from './components/goods/goods';
 import ratings from './components/ratings/ratings';
 import seller from './components/seller/seller';
-//import 'common/stylus/icon.styl';
-//import './common/st.css'
+//import './common/stylus/icon.styl';
+
 //通过npm安装的vue-router使用下面方式来给vue安装路由功能和交互
 //使用vue.use方法进行全局注册
 

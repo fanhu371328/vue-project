@@ -1,5 +1,6 @@
 <template>
   <div class="header">
+  	<!--内容区-->
   	<div class="content-wrapper">
   		<div class="avatar">
   			<img width="64" height="64" :src="seller.avatar"/>
@@ -21,13 +22,19 @@
   			<i class="icon-keyboard_arrow_right"></i>
   		</div>
   	</div>
+  	<!--公告区-->
   	<div class="bulletin-wrapper">
-  		
+  		<span class="bulletin-title"></span><span class="bulletin-text">{{seller.bulletin}}</span>
+  		<i class="icon-keyboard_arrow_right"></i>
+  	</div>
+  	<div class="bag">
+  		<img :src="seller.avatar"/>
   	</div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+	
 export default {
   name: 'header', 
   components: {
@@ -44,12 +51,26 @@ export default {
 }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">				
-				
+<style lang="stylus" rel="stylesheet/stylus">
+
+/*@font-face {
+	font-family:icon;
+	src:  url('../../common/fonts/icon.eot?8tqr70')
+  	src:  url('../../common/fonts/icon.eot?8tqr70#iefix') format('embedded-opentype'),
+    url('../../common/fonts/icon.ttf?8tqr70') format('truetype'),
+    url('../../common/fonts/icon.woff?8tqr70') format('woff'),
+    url('../../common/fonts/icon.svg?8tqr70#icon') format('svg')
+  	font-weight: normal
+  	font-style: normal
+}*/
+
 .header {
+	position: relative;
 	color: #fff;
-	background: #2F4F4F;
+	background: rgba(7,17,27,.5);
+	overflow: hidden;
 }
+/*-------------内容区---------*/	
 .content-wrapper{
 	display: flex;
 	padding: 24px 12px 18px 24px;
@@ -78,8 +99,10 @@ export default {
 	font-size: 10px;
 }
 .content-wrapper .support-count i {
+	font-family: icon;
 	font-size: 10px;
 }
+
 .content-wrapper .content .title .brand {
 	display: inline-block;
 	vertical-align: top;
@@ -131,9 +154,44 @@ export default {
 	background: url(./guarantee_1@3x.png) no-repeat;/*保障*/
 	background-size: 100% 100%;
 }
-
-
-
-
+/*----------------公告区---------------*/
+.bulletin-wrapper {
+	height: 28px;
+	padding: 0 22px 0 12px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	background: rgba(7,17,27,.2);
+}
+.bulletin-wrapper .bulletin-title {
+	display: inline-block;
+	width: 22px;
+	height: 12px;
+	background: url(bulletin@3x.png) no-repeat;
+	background-size: 100% 100%;
+	margin-right: 4px;
+	vertical-align: middle;
+	line-height: 28px;
+}
+.bulletin-wrapper .bulletin-text {
+	font-size: 10px;
+	vertical-align: middle;
+	line-height: 28px;
+}
+/*------------背景图----------*/
+.bag {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	filter: blur(10px);
+}
+.bag img {
+	margin: 0 auto;
+	margin-left: 18%;
+	margin-top: 8%;
+}
 
 </style>

@@ -60,14 +60,10 @@
 	.tab a {
 		display: block;
 		font-size: 14px;
-		color:#FFF;
-		/*color: rgb(77,85,93);*/
-		background: darkslategrey;
+		color: rgb(77,85,93);
 	}
 	.tab .active {
-		color:#fff;
-		/*color:rgb(240,20,20);*/
-		background: cyan;
+		color:rgb(240,20,20);
 	}
 	
 </style>
