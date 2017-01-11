@@ -35,9 +35,24 @@
   		<!--当内容区高于屏幕的时候底部关闭按钮会随着滚动，当小于屏幕高度的时候回固定在屏幕底部-->
   		<div class="detail-wrapper clearfix">
   			<div class="detail-main">
-  				
-  				
-  				
+  				<h1 class="name">{{seller.name}}</h1>
+  				<div class="star-wrapper">
+  					<star :size="48" :score="seller.score"></star>
+  				</div>
+  				<div class="special-offers">
+  					<span></span><h3>优惠信息</h3><span></span>
+  				</div>
+  				<div class="supports" v-if="seller.supports">
+  					<li class="support-item" v-for="(item, index) in seller.supports">
+  						<span class="icon" :class="classMap[seller.supports[index].type]"></span><span class="text"> {{item.description}} </span>
+  					</li>
+  				</div>
+  				<div class="notice">
+  					<span></span><h3>商家公告</h3><span></span>
+  				</div>
+  				<div class="notice-content">
+  					{{seller.bulletin}}
+  				</div>
   			</div>
   		</div>
   		<div class="detail-close" @click="closeDetail">
@@ -48,30 +63,35 @@
 </template>
 
 <script>
-	
-export default {
-  name: 'header', 
-  props: {
-  	seller: {
-  	}
-  },
-  data() {
-    return {
-    		detailShow:false,
-    }
-  },
-  methods: {
-  	showDetail() {
-  		this.detailShow = true;
-  	},
-  	closeDetail() {
-  		this.detailShow = false;
-  	}
-  },
-  created() {
-  	this.classMap = ['decrease','discount','special','invoice','guarantee']
-  }
-}
+
+	import star from '../star/star';
+
+	export default {
+	  name: 'header', 
+	  props: {
+	  	seller: {
+	  	}
+	  },
+	  data() {
+	    return {
+	    		detailShow:false,
+	    }
+	  },
+	  methods: {
+	  	showDetail() {
+	  		this.detailShow = true;
+	  	},
+	  	closeDetail() {
+	  		this.detailShow = false;
+	  	}
+	  },
+	  created() {
+	  	this.classMap = ['decrease','discount','special','invoice','guarantee']
+	  },
+	  components:{
+	  	star
+	  }
+	}
 </script>
 
 <style>
@@ -234,6 +254,12 @@ export default {
 	padding-top: 64px;
 	padding-bottom: 64px;
 }
+.detail-main .name {
+	font-size: 16px;
+	text-align: center;
+	line-height: 16px;
+	font-weight: 700;
+}
 .detail-close {
 	position: relative;
 	width:32px;
@@ -246,6 +272,93 @@ export default {
 	width: 32px;
 	height: 32px;
 }
+
+.star-wrapper {
+	margin-top: 16px;
+	padding:2px 0;
+	text-align: center;
+}
+/*-----------------------优惠信息-----------------*/
+.special-offers {
+	padding: 0 36px;
+	margin:28px 0 24px;
+	display: flex;
+	align-items: center;
+}
+.special-offers span {
+	flex: 1;
+	border: 1px solid rgba(255,255,255,.2);
+}
+.special-offers h3 {
+	padding: 0 12px;
+	font-weight: 700;
+}
+.supports {
+	font-size:0;
+	padding: 0 47px;
+}
+.support-item .icon {
+	display: inline-block;
+	vertical-align: middle;
+	width: 16px;
+	height: 16px;
+	margin-right: 6px;
+}
+.supports .text {
+	font-size: 12px;
+	line-height: 24px;
+	color: #fff;
+	vertical-align: middle;
+}
+
+.supports .decrease {  
+	background: url(./decrease_1@3x.png) no-repeat; /*满减*/
+	background-size: 100% 100%;
+}
+.supports .discount {
+	background: url(./discount_1@3x.png) no-repeat;/*打折*/
+	background-size: 100% 100%;
+}
+.supports .special {
+	background: url(./special_1@3x.png) no-repeat;/*套餐*/
+	background-size: 100% 100%;
+}
+.supports .invoice {
+	background: url(./invoice_1@3x.png) no-repeat;/*发票*/
+	background-size: 100% 100%;
+}
+.supports .guarantee {
+	background: url(./guarantee_1@3x.png) no-repeat;/*保障*/
+	background-size: 100% 100%;
+}
+/*-----------------商家公告--------------*/
+
+
+.notice {
+	padding: 0 36px;
+	margin:28px 0 24px;
+	display: flex;
+	align-items: center;
+}
+.notice span {
+	flex: 1;
+	border: 1px solid rgba(255,255,255,.2);
+}
+.notice h3 {
+	padding: 0 12px;
+	font-weight: 700;
+}
+.notice-content {
+	padding: 0 47px;
+	font-size: 12px;
+	line-height: 24px;
+}
+
+
+
+
+
+
 
 
 </style>
