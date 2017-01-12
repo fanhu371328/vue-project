@@ -33,6 +33,7 @@
 	  	}
 	  },
 	  created(){
+	  	//接口数据在build下的dev-server.js中定义
 	  	this.$http.get("/api/seller").then(function(response){
 
 	  		if(response.body.errno == 0) { 

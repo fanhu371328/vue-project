@@ -26,10 +26,10 @@
     		items() {
 
     			var result = [];
-
+    			//先乘以2向下取整后再除以二，效果是不足1.5的取1，大于1.5不足2的取1.5///向下取0.5的整
     			var score = Math.floor(this.score*2) / 2;
-    			var hasDecimal = score % 1 !== 0;  
-    			var integer = Math.floor(score);  
+    			var hasDecimal = score % 1 !== 0;  	//是否有小数，有就显示半星
+    			var integer = Math.floor(score);   //整星
 
     			for (var i=0 ; i<integer ; i++){
     				result.push(CLS_ON)
