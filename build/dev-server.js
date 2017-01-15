@@ -8,12 +8,12 @@ var webpackConfig = process.env.NODE_ENV === 'testing'
 	: require('./webpack.dev.conf')
 
 // default port where dev server listens for incoming traffic
-var port = process.env.PORT || config.dev.port
+var port = process.env.PORT || config.dev.port;
 // Define HTTP proxies to your custom API backend
 // https://github.com/chimurai/http-proxy-middleware
-var proxyTable = config.dev.proxyTable
+var proxyTable = config.dev.proxyTable;
 
-var app = express()
+var app = express();
 
 var appData = require('../data.json');
 var seller = appData.seller;
@@ -45,7 +45,7 @@ apiRoutes.get('/ratings', function (req, res) {
 
 app.use('/api', apiRoutes);
 
-var compiler = webpack(webpackConfig)
+var compiler = webpack(webpackConfig);
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
 	publicPath: webpackConfig.output.publicPath,
@@ -55,7 +55,7 @@ var devMiddleware = require('webpack-dev-middleware')(compiler, {
 	}
 })
 
-var hotMiddleware = require('webpack-hot-middleware')(compiler)
+var hotMiddleware = require('webpack-hot-middleware')(compiler);
 // force page reload when html-webpack-plugin template changes
 compiler.plugin('compilation', function (compilation) {
 	compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {

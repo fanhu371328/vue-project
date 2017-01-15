@@ -31,34 +31,36 @@
   		<img :src="seller.avatar"/>
   	</div>
   	<!--浮层区-->
-  	<div class="detail" v-show="detailShow">
-  		<!--当内容区高于屏幕的时候底部关闭按钮会随着滚动，当小于屏幕高度的时候回固定在屏幕底部-->
-  		<div class="detail-wrapper clearfix">
-  			<div class="detail-main">
-  				<h1 class="name">{{seller.name}}</h1>
-  				<div class="star-wrapper">
-  					<star :size="48" :score="seller.score"></star>
-  				</div>
-  				<div class="special-offers">
-  					<span></span><h3>优惠信息</h3><span></span>
-  				</div>
-  				<div class="supports" v-if="seller.supports">
-  					<li class="support-item" v-for="(item, index) in seller.supports">
-  						<span class="icon" :class="classMap[seller.supports[index].type]"></span><span class="text"> {{item.description}} </span>
-  					</li>
-  				</div>
-  				<div class="notice">
-  					<span></span><h3>商家公告</h3><span></span>
-  				</div>
-  				<div class="notice-content">
-  					{{seller.bulletin}}
-  				</div>
-  			</div>
-  		</div>
-  		<div class="detail-close" @click="closeDetail">
-  			<img src="./guanbi@3x.png"/>
-  		</div>
-  	</div>
+  	<transition name="fade">
+	  	<div class="detail" v-show = "detailShow">
+	  		<!--当内容区高于屏幕的时候底部关闭按钮会随着滚动，当小于屏幕高度的时候回固定在屏幕底部-->
+	  		<div class="detail-wrapper clearfix">
+	  			<div class="detail-main">
+	  				<h1 class="name">{{seller.name}}</h1>
+	  				<div class="star-wrapper">
+	  					<star :size="48" :score="seller.score"></star>
+	  				</div>
+	  				<div class="special-offers">
+	  					<span></span><h3>优惠信息</h3><span></span>
+	  				</div>
+	  				<div class="supports" v-if="seller.supports">
+	  					<li class="support-item" v-for="(item, index) in seller.supports">
+	  						<span class="icon" :class="classMap[seller.supports[index].type]"></span><span class="text"> {{item.description}} </span>
+	  					</li>
+	  				</div>
+	  				<div class="notice">
+	  					<span></span><h3>商家公告</h3><span></span>
+	  				</div>
+	  				<div class="notice-content">
+	  					{{seller.bulletin}}
+	  				</div>
+	  			</div>
+	  		</div>
+	  		<div class="detail-close" @click="closeDetail">
+	  			<img src="./guanbi@3x.png"/>
+	  		</div>
+	  	</div>
+  	</transition>
   </div>
 </template>
 
@@ -116,6 +118,7 @@
 .content-wrapper .content {
 	display: inline-block;
 	margin-left: 16px;
+	padding-top: 2px;
 	font-size: 14px;	
 }
 .content-wrapper .support-count {
@@ -246,6 +249,14 @@
 	background: rgba(7,17,27,.8);
 	/*filter: blur(10px);*/
 }
+/*过渡效果*/
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}
+
 
 .detail-wrapper {
 	min-height: 100%;

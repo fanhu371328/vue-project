@@ -25,26 +25,28 @@
 	import myheader from './components/header/header.vue';
 
 	export default {
-	  name: 'app',
-	  data(){
-	  	return {
-	  		seller:{
-	  		}
-	  	}
-	  },
-	  created(){
-	  	//接口数据在build下的dev-server.js中定义
-	  	this.$http.get("/api/seller").then(function(response){
+	  	name: 'app',
+	  	data(){
+	  		return {
+		  		seller:{
+		  		},
+		  		goods:{
+		  		}
+		  	}
+		},
+	    created(){
+		  	//接口数据在build下的dev-server.js中定义
+		  	this.$http.get("/api/seller").then(function(response){
 
-	  		if(response.body.errno == 0) { 
-	  			this.seller = response.body.data;
-	  			console.log(this.seller)
-	  		}
-	  	})
-	  },
-	  components: {
-	  	myheader
-	  }
+		  		if(response.body.errno == 0) { 
+		  			this.seller = response.body.data;
+		  			console.log(this.seller)
+		  		}
+		  	})
+	    },
+	  	components: {
+	  		myheader
+	  	}
 	}
 </script>
 
