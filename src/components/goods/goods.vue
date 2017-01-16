@@ -2,14 +2,16 @@
   	<div class="goods">
 	  	<div class="menu-wrapper" ref="menuwrapper">
 	  		<ul>
-	  			<li v-for="(item,index) in goods" class="menu-item">
-  					<span class="text"> <span v-show="item.type > 0" class="icon" :class="classMap[item.type]"></span>{{item.name}} </span>
+	  			<li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}" @click="selectMenu(index)">
+	  			<!-- <li v-for="(item,index) in goods" class="menu-item"> -->
+
+  					<span class="text"> <span v-show="item.type > 0" class="icon" :class="classMap[item.type]"></span>{{item.name}}</span>
 	  			</li>
 	  		</ul>
 	    </div>
      	<div class="goods-wrapper" ref="goodswrapper">
 		  	<ul>
-		  		<li v-for="(item,index) in goods" class="food-list">
+		  		<li v-for="(item,index) in goods" class="food-list food-list-hook">
 		  			<h2 class="title"> {{item.name}} </h2>
 		  			<ul>
 		  				<li v-for="food in item.foods" class="food-item">
@@ -48,33 +50,79 @@
 		},
 		data(){
 			return {
-				goods:[]
+				goods:[],
+				listHeight:[],
+				scrollY:0,
 			}
 		},
-		 created(){
+		computed:{
+			// 计算当前高度对应的index,要考虑最后一个的特殊情况
+			// currentIndex(){
+			currentIndex:function(){
+				for(var i=0;i<this.listHeight.length;i++){
+					var height1 = this.listHeight[i];
+					var height2 = this.listHeight[i+1];
+					if(!height2 || (this.scrollY >= height1 && this.scrollY < height2)){
+						return i
+					}
+				};
+				return 0;
+			}
+		},
+		created(){
 		  	this.$http.get("/api/goods").then(function(response){
 		  		if(response.body.errno == 0) { 
 		  			this.goods = response.body.data;
 		  			//当dom更新后再执行初始化
 		  			this.$nextTick(function(){
 		  				this._initScroll();
+		  				this._calculateHeight();
 		  			})
 		  		}
 		  	}),
 		  	this.classMap = ['decrease','discount','special','invoice','guarantee']
 	    },
 	    methods:{
+	    	
     		_initScroll(){
-				this.menuScroll = new BScroll(this.$refs.menuwrapper,{})
+    			var self = this;
+				this.menuScroll = new BScroll(this.$refs.menuwrapper,{
+					//取消阻止点击事件
+					click:true,
+				});
 
-				this.foodScroll = new BScroll(this.$refs.goodswrapper,{});
+				this.foodScroll = new BScroll(this.$refs.goodswrapper,{
+					probeType:3,  //实时监听滚动的位置
+				});
+				this.foodScroll.on('scroll',function(pos){
+					//通过监听滚动事件，计算出实时的滚动高度
+					self.scrollY = Math.abs(Math.round(pos.y));
+				})
+    		},
+    		_calculateHeight(){
+    			//找到所有的foods-list,计算出每一个list对应的距离顶部的高度，并追加到数组中
+    			var foodslist = this.$refs.goodswrapper.getElementsByClassName('food-list-hook');
+    			var height = 0;
+    			this.listHeight.push(height);
+    			for(var i=0;i<foodslist.length;i++){
+    				var item = foodslist[i];
+    				height+=item.clientHeight;
+    				this.listHeight.push(height);
+    			};
+    		},
+    		selectMenu(index){
+    			// console.log(index)
+    			var foodslist = this.$refs.goodswrapper.getElementsByClassName('food-list-hook');
+    			var elem = foodslist[index];
+    			//调用scrollToElement()方法，滚动到指定元素的位置
+    			this.foodScroll.scrollToElement(elem);
     		}
 	    }
 	}
 </script>
 
 <style>
-/*---------------------上下固定高度，中间自适应的布局---------------*/
+/*---------------------左固定宽度，右侧自适应的布局---------------*/
 .goods {
 	position: absolute;
 	top: 175px;
@@ -99,6 +147,16 @@
 	height: 54px;
 	padding: 0 12px;
 	display: table;
+}
+.menu-wrapper .current {
+	position: relative;
+	top: -1px;
+	z-index: 9;
+	background: #fff;
+}
+.menu-wrapper .current .text {
+	font-weight: 700;
+	border: none;
 }
 .menu-wrapper .text {
 	font-size: 12px;
