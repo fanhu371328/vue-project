@@ -35,12 +35,16 @@
 		  		</li>
 		  	</ul>
 		</div>
+
+		<shopcar></shopcar>
+		
     </div>
 </template>
 
 <script>
 	//引入滚动插件
 	import BScroll from 'better-scroll';
+	import Shopcar from '../shopcar/shopcar';
 
 	export default {
 		proops:{
@@ -85,6 +89,7 @@
 	    methods:{
 	    	
     		_initScroll(){
+    			//注意这里的this
     			var self = this;
 				this.menuScroll = new BScroll(this.$refs.menuwrapper,{
 					//取消阻止点击事件
@@ -117,6 +122,9 @@
     			//调用scrollToElement()方法，滚动到指定元素的位置
     			this.foodScroll.scrollToElement(elem);
     		}
+	    },
+	    components:{
+	    	Shopcar
 	    }
 	}
 </script>
